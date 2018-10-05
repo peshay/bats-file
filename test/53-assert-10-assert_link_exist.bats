@@ -4,15 +4,15 @@ load 'test_helper'
 fixtures 'exist'
 
 # Correctness
-@test 'assert_link_exist() <file>: returns 0 if <file> Link exists' {
+@test 'assert_link_exist() <file>: returns 0 if <link> exists' {
   local -r file="${TEST_FIXTURE_ROOT}/dir/link"
   run assert_link_exist "$file"
   [ "$status" -eq 0 ]
   [ "${#lines[@]}" -eq 0 ]
 }
 
-@test 'assert_link_exist() <file>: returns 1 and displays path if <file>symbolic link does not exist' {
-  local -r file="${TEST_FIXTURE_ROOT}/dir/ "
+@test 'assert_link_exist() <file>: returns 1 and displays path if <link> does not exist' {
+  local -r file="${TEST_FIXTURE_ROOT}/dir/file"
   run assert_link_exist "$file"
   [ "$status" -eq 1 ]
   [ "${#lines[@]}" -eq 3 ]
