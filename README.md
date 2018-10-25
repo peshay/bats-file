@@ -177,7 +177,7 @@ path : /path/to/non-existent-fifo-file
 Fail if the given file is not executable.
 
 ```bash
-@test 'assert_file_executable() {
+@test 'assert_file_executable()' {
   assert_file_executable /path/to/executable-file
 }
 ```
@@ -190,6 +190,24 @@ path : /path/to/executable-file
 --
 ```
 
+### `assert_equal_files`
+
+Fail if the given files are not the same.
+
+```bash
+@test 'assert_equal_files()' {
+  assert_equal_files /path/to/file1 /path/to/file2
+}
+```
+
+On failure, the path is displayed.
+
+```
+-- files are not the same --
+path1 : /path/to/file
+path2 : /path/to/same_file
+--
+```
 
 
 ### `assert_file_not_exist`
@@ -306,7 +324,7 @@ path : /path/to/existing-socket
 Fail if the given named pipe exists.
 
 ```bash
-@test 'assert_fifo_not_exist() {
+@test 'assert_fifo_not_exist()' {
   assert_file_not_exist /path/to/existing-fifo-file
 }
 ```
@@ -325,7 +343,7 @@ path : /path/to/existing-fifo-file
 Fail if the given file is executable.
 
 ```bash
-@test 'assert_file_not_executable() {
+@test 'assert_file_not_executable()' {
   assert_file_not_executable /path/to/executable-file
 }
 ```
@@ -338,6 +356,25 @@ path : /path/to/executable-file
 --
 ```
 
+
+### `assert_not_equal_files`
+
+Fail if the given files are not the same.
+
+```bash
+@test 'assert_not_equal_files()' {
+  assert_not_equal_files /path/to/file1 /path/to/file2
+}
+```
+
+On failure, the path is displayed.
+
+```
+-- files are the same --
+path1 : /path/to/file
+path2 : /path/to/same_file
+--
+```
 
 
 ## Working with temporary directories
