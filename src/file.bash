@@ -244,7 +244,7 @@ assert_file_executable() {
 }
 
 
-# This function is the logical complement of `assert_not_equal_files'.
+# This function is the logical complement of `assert_files_not_equal'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -257,14 +257,13 @@ assert_file_executable() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_equal_files() {
-
+assert_files_equal() {
   local -r file1="$1"
   local -r file2="$2"
   if ! `cmp -s "$file1" "$file2"` ; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
-    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+    batslib_print_kv_single 4 'path' "${file1/$rem/$add}" 'path' "${file2/$rem/$add}" \
       | batslib_decorate 'files are not the same' \
       | fail
   fi
@@ -491,7 +490,7 @@ assert_file_not_executable() {
   fi
 }
 
-# This function is the logical complement of `assert_equal_files'.
+# This function is the logical complement of `assert_files_equal'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -504,14 +503,13 @@ assert_file_not_executable() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_not_equal_files() {
-
+assert_files_not_equal() {
   local -r file1="$1"
   local -r file2="$2"
   if `cmp -s "$file1" "$file2"` ; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
-    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+    batslib_print_kv_single 4 'path' "${file1/$rem/$add}" 'path' "${file2/$rem/$add}" \
       | batslib_decorate 'files are the same' \
       | fail
   fi

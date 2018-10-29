@@ -190,13 +190,13 @@ path : /path/to/executable-file
 --
 ```
 
-### `assert_equal_files`
+### `assert_files_equal`
 
 Fail if the given files are not the same.
 
 ```bash
-@test 'assert_equal_files()' {
-  assert_equal_files /path/to/file1 /path/to/file2
+@test 'assert_files_equal()' {
+  assert_files_equal /path/to/file1 /path/to/file2
 }
 ```
 
@@ -357,13 +357,13 @@ path : /path/to/executable-file
 ```
 
 
-### `assert_not_equal_files`
+### `assert_files_not_equal`
 
 Fail if the given files are not the same.
 
 ```bash
-@test 'assert_not_equal_files()' {
-  assert_not_equal_files /path/to/file1 /path/to/file2
+@test 'assert_files_not_equal()' {
+  assert_files_not_equal /path/to/file1 /path/to/file2
 }
 ```
 
