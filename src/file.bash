@@ -217,7 +217,6 @@ assert_fifo_exist() {
   fi
 }
 
-
 # Fail and display path of the named file if it is not executable.
 # This function is the logical complement of `assert_file_not_executable'.
 #
@@ -243,7 +242,6 @@ assert_file_executable() {
   fi
 }
 
-
 # This function is the logical complement of `assert_files_not_equal'.
 #
 # Globals:
@@ -268,7 +266,6 @@ assert_files_equal() {
       | fail
   fi
 }
-
 
 # Fail and display path of the file (or directory) if it exists. This
 # function is the logical complement of `assert_exist'.
