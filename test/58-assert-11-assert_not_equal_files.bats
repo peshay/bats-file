@@ -22,6 +22,7 @@ fixtures 'exist'
   [ "${lines[0]}" == '-- files are the same --' ]
   [ "${lines[1]}" == "path : $file1" ]
   [ "${lines[2]}" == "path : $file2" ]
+  [ "${lines[3]}" == "--" ]
 }
 
 # Transforming path
@@ -45,6 +46,7 @@ fixtures 'exist'
   [ "${lines[0]}" == '-- files are the same --' ]
   [ "${lines[1]}" == "path : ../dir/file_with_text" ]
   [ "${lines[2]}" == "path : ../dir/same_file_with_text" ]
+  [ "${lines[3]}" == "--" ]
 }
 
 @test 'assert_files_not_equal() <file>: replace suffix of displayed path' {
@@ -58,6 +60,7 @@ fixtures 'exist'
   [ "${lines[0]}" == '-- files are the same --' ]
   [ "${lines[1]}" == "path : ${TEST_FIXTURE_ROOT}/dir/file_with_text" ]
   [ "${lines[2]}" == "path : ${TEST_FIXTURE_ROOT}/dir/.." ]
+  [ "${lines[3]}" == "--" ]
 }
 
 @test 'assert_files_not_equal() <file>: replace infix of displayed path' {
@@ -71,4 +74,5 @@ fixtures 'exist'
   [ "${lines[0]}" == '-- files are the same --' ]
   [ "${lines[1]}" == "path : ${TEST_FIXTURE_ROOT}/../file_with_text" ]
   [ "${lines[2]}" == "path : ${TEST_FIXTURE_ROOT}/../same_file_with_text" ]
+  [ "${lines[3]}" == "--" ]
 }

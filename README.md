@@ -359,7 +359,7 @@ path : /path/to/executable-file
 
 ### `assert_files_not_equal`
 
-Fail if the given files are not the same.
+Fail if the given files are the same.
 
 ```bash
 @test 'assert_files_not_equal()' {
