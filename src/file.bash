@@ -341,6 +341,31 @@ echo $RESULT
     fi
 fi
     }
+# Fail and display path of the file (or directory) if it does not match a size.
+#
+# Globals:
+#   BATSLIB_FILE_PATH_REM
+#   BATSLIB_FILE_PATH_ADD
+# Arguments:
+#   $1 - path
+#   $2 - expected size (bytes)
+# Returns:
+#   0 - file is correct size
+#   1 - otherwise
+# Outputs:
+#   STDERR - details, on failure
+assert_file_size_equals() {
+  local -r file="$1"
+  local -r expectedsize="$2"
+  local -r size=$( wc -c "$file" | awk '{print $1}' )
+  if [ ! "$expectedsize" = "$size" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate 'file size does not match expected size' \
+      | fail
+  fi
+}
 # Fail and display path of the file (or directory) if it exists. This
 # function is the logical complement of `assert_exist'.
 #
