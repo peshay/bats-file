@@ -3,6 +3,16 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+  touch ${TEST_FIXTURE_ROOT}/dir/useridset ${TEST_FIXTURE_ROOT}/dir/useridnotset
+  chmod u+s ${TEST_FIXTURE_ROOT}/dir/useridset
+  
+}
+teardown () {
+  
+  rm -f ${TEST_FIXTURE_ROOT}/dir/useridset ${TEST_FIXTURE_ROOT}/dir/useridnotset
+}
+
 
 # Correctness
 @test 'assert_file_user_id_set() <file>: returns 0 if <file> set-user-ID is set' {

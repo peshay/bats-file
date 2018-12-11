@@ -3,6 +3,17 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+  touch ${TEST_FIXTURE_ROOT}/dir/groupidset ${TEST_FIXTURE_ROOT}/dir/groupidnotset
+  chmod g+s ${TEST_FIXTURE_ROOT}/dir/groupidset
+  
+}
+teardown () {
+  
+  rm -f ${TEST_FIXTURE_ROOT}/dir/groupidset ${TEST_FIXTURE_ROOT}/dir/groupidnotset
+}
+
+
 
 # Correctness
 @test 'assert_file_group_id_set() <file>: returns 0 if <file> set-group-ID is set' {

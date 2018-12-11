@@ -3,6 +3,15 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+ touch ${TEST_FIXTURE_ROOT}/dir/owner ${TEST_FIXTURE_ROOT}/dir/notowner
+ sudo chown lam ${TEST_FIXTURE_ROOT}/dir/owner 
+ sudo chown ahu ${TEST_FIXTURE_ROOT}/dir/notowner
+}
+teardown () {
+    rm -f ${TEST_FIXTURE_ROOT}/dir/owner ${TEST_FIXTURE_ROOT}/dir/notowner
+}
+
 
 # Correctness
 @test 'assert_file_owner() <file>: returns 0 if <file> user lam is the owner of the file' {

@@ -3,6 +3,14 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+  touch ${TEST_FIXTURE_ROOT}/dir/permission
+  chmod 777 ${TEST_FIXTURE_ROOT}/dir/permission
+}
+teardown () {
+  
+  rm -f ${TEST_FIXTURE_ROOT}/dir/permission
+}
 
 # Correctness
 @test 'assert_file_permission() <file>: returns 0 if <file> file has 777' {

@@ -3,6 +3,16 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+  touch ${TEST_FIXTURE_ROOT}/dir/stickybit ${TEST_FIXTURE_ROOT}/dir/notstickybit
+  chmod +t ${TEST_FIXTURE_ROOT}/dir/stickybit
+  
+}
+teardown () {
+  
+  rm -f ${TEST_FIXTURE_ROOT}/dir/stickybit ${TEST_FIXTURE_ROOT}/dir/notstickybit
+  }
+
 
 # Correctness
 @test 'assert_sticky_bit() <file>: returns 0 if <file> stickybit is set' {
