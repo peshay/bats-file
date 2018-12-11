@@ -3,6 +3,16 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+  touch ${TEST_FIXTURE_ROOT}/dir/zerobyte 
+  mkfile 2k ${TEST_FIXTURE_ROOT}/dir/notzerobyte
+  
+}
+teardown () {
+  
+  rm -f ${TEST_FIXTURE_ROOT}/dir/zerobyte ${TEST_FIXTURE_ROOT}/dir/notzerobyte
+}
+
 
 # Correctness
 @test 'assert_size_zero() <file>: returns 0 if <file> file is 0 byte' {

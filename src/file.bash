@@ -390,7 +390,7 @@ assert_file_user_id_set() {
 }
 
 # Fail if stickybit not set on file. This
-# function is the logical complement of `assert_no_sticky_bit'.
+# function is the logical complement of `assert_sticky_bit'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM

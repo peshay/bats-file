@@ -3,6 +3,16 @@
 load 'test_helper'
 fixtures 'exist'
 
+setup () {
+  touch ${TEST_FIXTURE_ROOT}/dir/permission ${TEST_FIXTURE_ROOT}/dir/nopermission
+  chmod 777 ${TEST_FIXTURE_ROOT}/dir/permission 
+  chmod 644 ${TEST_FIXTURE_ROOT}/dir/nopermission
+}
+teardown () {
+  
+  rm -f ${TEST_FIXTURE_ROOT}/dir/permission ${TEST_FIXTURE_ROOT}/dir/nopermission
+}
+
 # Correctness
 @test 'assert_not_file_permission() <file>: returns 0 if <file> file does not have permissions 777' {
   local -r permission="777"
