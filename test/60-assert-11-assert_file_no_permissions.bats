@@ -5,8 +5,8 @@ fixtures 'exist'
 
 setup () {
   touch ${TEST_FIXTURE_ROOT}/dir/permission ${TEST_FIXTURE_ROOT}/dir/nopermission
-  chmod 777 ${TEST_FIXTURE_ROOT}/dir/permission 
-  chmod 644 ${TEST_FIXTURE_ROOT}/dir/nopermission
+  sudo chmod 777 ${TEST_FIXTURE_ROOT}/dir/permission 
+  sudo chmod 644 ${TEST_FIXTURE_ROOT}/dir/nopermission
 }
 teardown () {
   
