@@ -5,8 +5,6 @@ fixtures 'exist'
 
 setup () {
  touch ${TEST_FIXTURE_ROOT}/dir/owner ${TEST_FIXTURE_ROOT}/dir/notowner
- sudo chown lam ${TEST_FIXTURE_ROOT}/dir/owner 
- sudo chown ahu ${TEST_FIXTURE_ROOT}/dir/notowner
 }
 teardown () {
     rm -f ${TEST_FIXTURE_ROOT}/dir/owner ${TEST_FIXTURE_ROOT}/dir/notowner
@@ -14,23 +12,23 @@ teardown () {
 
 
 # Correctness
-@test 'assert_file_owner() <file>: returns 0 if <file> user lam is the owner of the file' {
-  local -r owner="lam"
+@test 'assert_file_owner() <file>: returns 0 if <file> user root is the owner of the file' {
+  local -r owner="root"
   local -r file="${TEST_FIXTURE_ROOT}/dir/owner"
   run assert_file_owner "$owner" "$file"
   [ "$status" -eq 0 ]
   echo ${#lines[@]}
-  [ "${#lines[@]}" -eq 0 ]
+  [ "${#lines[@]}" -eq 0 ] 
 
 }
 
-@test 'assert_file_owner() <file>: returns 1 and displays path if <file> user lam is not the owner of the file' {
-  local -r owner="lam"
+@test 'assert_file_owner() <file>: returns 1 and displays path if <file> user root is not the owner of the file' {
+  local -r owner="root"
   local -r file="${TEST_FIXTURE_ROOT}/dir/notowner"
   run assert_file_owner "$owner" "$file"
   [ "$status" -eq 1 ]
   [ "${#lines[@]}" -eq 3 ]
-  [ "${lines[0]}" == '-- user lam is not the owner of the file --' ]
+  [ "${lines[0]}" == '-- user root is not the owner of the file --' ]
   [ "${lines[1]}" == "path : $file" ]
   [ "${lines[2]}" == '--' ]
 }
@@ -41,12 +39,12 @@ teardown () {
 @test 'assert_file_owner() <file>: replace prefix of displayed path' {
   local -r BATSLIB_FILE_PATH_REM="#${TEST_FIXTURE_ROOT}"
   local -r BATSLIB_FILE_PATH_ADD='..'
-  local -r owner="lam"
+  local -r owner="root"
   local -r file="${TEST_FIXTURE_ROOT}/dir/notowner"
   run assert_file_owner "$owner" "$file"
   [ "$status" -eq 1 ]
   [ "${#lines[@]}" -eq 3 ]
-  [ "${lines[0]}" == '-- user lam is not the owner of the file --' ]
+  [ "${lines[0]}" == '-- user root is not the owner of the file --' ]
   [ "${lines[1]}" == "path : ../dir/notowner" ]
   [ "${lines[2]}" == '--' ]
 }
@@ -54,12 +52,12 @@ teardown () {
 @test 'assert_file_owner() <file>: replace suffix of displayed path' {
   local -r BATSLIB_FILE_PATH_REM='%dir/notowner'
   local -r BATSLIB_FILE_PATH_ADD='..'
-  local -r owner="lam"
+  local -r owner="root"
   local -r file="${TEST_FIXTURE_ROOT}/dir/notowner"
   run assert_file_owner "$owner" "$file"
   [ "$status" -eq 1 ]
   [ "${#lines[@]}" -eq 3 ]
-  [ "${lines[0]}" == '-- user lam is not the owner of the file --' ]
+  [ "${lines[0]}" == '-- user root is not the owner of the file --' ]
   [ "${lines[1]}" == "path : ${TEST_FIXTURE_ROOT}/.." ]
   [ "${lines[2]}" == '--' ]
 }
@@ -67,12 +65,12 @@ teardown () {
 @test 'assert_file_owner() <file>: replace infix of displayed path' {
   local -r BATSLIB_FILE_PATH_REM='dir/notowner'
   local -r BATSLIB_FILE_PATH_ADD='..'
-  local -r owner="lam"
+  local -r owner="root"
   local -r file="${TEST_FIXTURE_ROOT}/dir/notowner"
   run assert_file_owner "$owner" "$file"
   [ "$status" -eq 1 ]
   [ "${#lines[@]}" -eq 3 ]
-  [ "${lines[0]}" == '-- user lam is not the owner of the file --' ]
+  [ "${lines[0]}" == '-- user root is not the owner of the file --' ]
   [ "${lines[1]}" == "path : ${TEST_FIXTURE_ROOT}/.." ]
   [ "${lines[2]}" == '--' ]
 }

@@ -283,6 +283,9 @@ assert_files_equal() {
 assert_file_owner() {
   local -r owner="$1"
   local -r file="$2"
+  if [[ `uname` == "Darwin" ]]; then
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
   if [ `stat -f '%Su' "$file"` != "$owner" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -290,6 +293,17 @@ assert_file_owner() {
       | batslib_decorate "user $owner is not the owner of the file" \
       | fail
   fi
+elif [[ `uname` == "Linux" ]]; then
+  chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
+  if [ `stat -c "%U" "$file"` != "$owner" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate "user $owner is not the owner of the file" \
+      | fail
+  fi
+fi
 }
 
 # Fail if file does not have given permissions. This
@@ -712,6 +726,9 @@ assert_file_not_executable() {
 assert_not_file_owner() {
   local -r owner="$1"
   local -r file="$2"
+  if [[ `uname` == "Darwin" ]]; then
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
   if [ `stat -f '%Su' "$file"` = "$owner" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -719,6 +736,17 @@ assert_not_file_owner() {
       | batslib_decorate "given user is the $owner, but it was expected not to be" \
       | fail
   fi
+  elif [[ `uname` == "Linux" ]]; then
+  chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
+    if [ `stat -c "%U" "$file"` = "$owner" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate "given user is the $owner, but it was expected not to be" \
+      | fail
+  fi
+fi
 }
 
 # Fail if the file has given permissions. This
