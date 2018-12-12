@@ -283,6 +283,9 @@ assert_files_equal() {
 assert_file_owner() {
   local -r owner="$1"
   local -r file="$2"
+  if [[ `uname` == "Darwin" ]]; then
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
   if [ `stat -f '%Su' "$file"` != "$owner" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -290,6 +293,17 @@ assert_file_owner() {
       | batslib_decorate "user $owner is not the owner of the file" \
       | fail
   fi
+elif [[ `uname` == "Linux" ]]; then
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
+  if [ `stat -c "%U" "$file"` != "$owner" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate "user $owner is not the owner of the file" \
+      | fail
+  fi
+fi
 }
 
 # Fail if file does not have given permissions. This
@@ -308,6 +322,7 @@ assert_file_owner() {
 assert_file_permission() {
   local -r permission="$1"
   local -r file="$2"
+  if [[ `uname` == "Darwin" ]]; then
   if [ `stat -f '%A' "$file"` -ne "$permission" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -315,6 +330,16 @@ assert_file_permission() {
       | batslib_decorate "file does not have permissions $permission" \
       | fail
   fi
+  elif [[ `uname` == "Linux" ]]; then
+  if [ `stat -c "%a" "$file"` -ne "$permission" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate "file does not have permissions $permission" \
+      | fail
+  fi
+
+fi
 }
 
 # Fail if file is not zero byte. This
@@ -332,13 +357,25 @@ assert_file_permission() {
 #   STDERR - details, on failure
 assert_size_zero() {
   local -r file="$1"
-  if [ -s "$file" ]; then
+    if [[ `uname` == "Darwin" ]]; then
+    mkfile 2k ${TEST_FIXTURE_ROOT}/dir/notzerobyte
+    if [ -s "$file" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
     batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
       | batslib_decorate 'file is greater than 0 byte' \
       | fail
   fi
+    elif [[ `uname` == "Linux" ]]; then
+    fallocate -l 2k ${TEST_FIXTURE_ROOT}/dir/notzerobyte
+    if [ -s "$file" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate 'file is greater than 0 byte' \
+      | fail
+  fi
+fi
 }
 
 # Fail if group if is not set on file. This
@@ -712,6 +749,9 @@ assert_file_not_executable() {
 assert_not_file_owner() {
   local -r owner="$1"
   local -r file="$2"
+  if [[ `uname` == "Darwin" ]]; then
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
   if [ `stat -f '%Su' "$file"` = "$owner" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -719,6 +759,17 @@ assert_not_file_owner() {
       | batslib_decorate "given user is the $owner, but it was expected not to be" \
       | fail
   fi
+  elif [[ `uname` == "Linux" ]]; then
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
+    if [ `stat -c "%U" "$file"` = "$owner" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate "given user is the $owner, but it was expected not to be" \
+      | fail
+  fi
+fi
 }
 
 # Fail if the file has given permissions. This
@@ -737,6 +788,7 @@ assert_not_file_owner() {
 assert_not_file_permission() {
   local -r permission="$1"
   local -r file="$2"
+  if [[ `uname` == "Darwin" ]]; then
     if [ `stat -f '%A' "$file"` -eq "$permission" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -744,6 +796,16 @@ assert_not_file_permission() {
       | batslib_decorate "file has permissions $permission, but it was expected not to have" \
       | fail
   fi
+  elif [[ `uname` == "Linux" ]]; then
+        if [ `stat -c "%a" "$file"` -eq "$permission" ]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate "file has permissions $permission, but it was expected not to have" \
+      | fail
+    fi
+  fi
+
 }
 
 # This function is the logical complement of `assert_files_equal'.
@@ -781,6 +843,8 @@ assert_files_not_equal() {
 #   STDERR - details, on failure
 assert_size_not_zero() {
   local -r file="$1"
+  if [[ `uname` == "Darwin" ]]; then
+  mkfile 2k ${TEST_FIXTURE_ROOT}/dir/notzerobyte
   if [[ ! -s "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
@@ -788,6 +852,16 @@ assert_size_not_zero() {
       | batslib_decorate 'file is 0 byte, but it was expected not to be' \
       | fail
   fi
+  elif [[ `uname` == "Linux" ]]; then
+  fallocate -l 2k ${TEST_FIXTURE_ROOT}/dir/notzerobyte
+  if [[ ! -s "$file" ]]; then
+    local -r rem="$BATSLIB_FILE_PATH_REM"
+    local -r add="$BATSLIB_FILE_PATH_ADD"
+    batslib_print_kv_single 4 'path' "${file/$rem/$add}" \
+      | batslib_decorate 'file is 0 byte, but it was expected not to be' \
+      | fail
+  fi
+fi
 }
 
 

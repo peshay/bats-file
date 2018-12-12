@@ -5,11 +5,9 @@ fixtures 'exist'
 
 setup () {
   touch ${TEST_FIXTURE_ROOT}/dir/zerobyte 
-  mkfile 2k ${TEST_FIXTURE_ROOT}/dir/notzerobyte
-  
 }
-teardown () {
-  
+
+teardown () {  
   rm -f ${TEST_FIXTURE_ROOT}/dir/zerobyte ${TEST_FIXTURE_ROOT}/dir/notzerobyte
 }
 
