@@ -760,8 +760,8 @@ assert_not_file_owner() {
       | fail
   fi
   elif [[ `uname` == "Linux" ]]; then
-  chown root ${TEST_FIXTURE_ROOT}/dir/owner 
-  chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
+  sudo chown root ${TEST_FIXTURE_ROOT}/dir/owner 
+  sudo chown daemon ${TEST_FIXTURE_ROOT}/dir/notowner
     if [ `stat -c "%U" "$file"` = "$owner" ]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
     local -r add="$BATSLIB_FILE_PATH_ADD"
