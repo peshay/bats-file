@@ -26,7 +26,7 @@
 #
 
 # Fail and display path of the file or directory if it does not exist.
-# This function is the logical complement of `assert_not_exist'.
+# This function is the logical complement of `assert_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -38,7 +38,7 @@
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_exist() {
+assert_exists() {
   local -r file="$1"
   if [[ ! -e "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -50,7 +50,7 @@ assert_exist() {
 }
 
 # Fail and display path of the file if it does not exist.
-# This function is the logical complement of `assert_file_not_exist'.
+# This function is the logical complement of `assert_file_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -62,7 +62,7 @@ assert_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_file_exist() {
+assert_file_exists() {
   local -r file="$1"
   if [[ ! -f "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -74,7 +74,7 @@ assert_file_exist() {
 }
 
 # Fail and display path of the directory if it does not exist.
-# This function is the logical complement of `assert_dir_not_exist'.
+# This function is the logical complement of `assert_dir_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -86,7 +86,7 @@ assert_file_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_dir_exist() {
+assert_dir_exists() {
   local -r file="$1"
   if [[ ! -d "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -98,7 +98,7 @@ assert_dir_exist() {
 }
 
 # Fail and display path of the block special file if it does not exist.
-# This function is the logical complement of `assert_block_not_exist'.
+# This function is the logical complement of `assert_block_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -110,7 +110,7 @@ assert_dir_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_block_exist() {
+assert_block_exists() {
   local -r file="$1"
   if [[ ! -b "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -122,7 +122,7 @@ assert_block_exist() {
 }
 
 # Fail and display path of the character special file if it does not exist.
-# This function is the logical complement of `assert_character_not_exist'.
+# This function is the logical complement of `assert_character_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -134,7 +134,7 @@ assert_block_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_character_exist() {
+assert_character_exists() {
   local -r file="$1"
   if [[ ! -c "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -146,7 +146,7 @@ assert_character_exist() {
 }
 
 # Fail and display path of the symbolic link if it does not exist.
-# This function is the logical complement of `assert_link_not_exist'.
+# This function is the logical complement of `assert_link_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -158,7 +158,7 @@ assert_character_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_link_exist() {
+assert_link_exists() {
   local -r file="$1"
   if [[ ! -L "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -170,7 +170,7 @@ assert_link_exist() {
 }
 
 # Fail and display path of the socket if it does not exist.
-# This function is the logical complement of `assert_socket_not_exist'.
+# This function is the logical complement of `assert_socket_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -182,7 +182,7 @@ assert_link_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_socket_exist() {
+assert_socket_exists() {
   local -r file="$1"
   if [[ ! -S "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -194,7 +194,7 @@ assert_socket_exist() {
 }
 
 # Fail and display path of the named pipe if it does not exist.
-# This function is the logical complement of `assert_fifo_not_exist'.
+# This function is the logical complement of `assert_fifo_not_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -206,7 +206,7 @@ assert_socket_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_fifo_exist() {
+assert_fifo_exists() {
   local -r file="$1"
   if [[ ! -p "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -593,7 +593,7 @@ assert_file_empty() {
   fi
 }
 # Fail and display path of the file (or directory) if it exists. This
-# function is the logical complement of `assert_exist'.
+# function is the logical complement of `assert_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -605,7 +605,7 @@ assert_file_empty() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_not_exist() {
+assert_not_exists() {
   local -r file="$1"
   if [[ -e "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -617,7 +617,7 @@ assert_not_exist() {
 }
 
 # Fail and display path of the file if it exists. This
-# function is the logical complement of `assert_file_exist'.
+# function is the logical complement of `assert_file_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -629,7 +629,7 @@ assert_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_file_not_exist() {
+assert_file_not_exists() {
   local -r file="$1"
   if [[ -f "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -641,7 +641,7 @@ assert_file_not_exist() {
 }
 
 # Fail and display path of the directory if it exists. This
-# function is the logical complement of `assert_dir_exist'.
+# function is the logical complement of `assert_dir_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -653,7 +653,7 @@ assert_file_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_dir_not_exist() {
+assert_dir_not_exists() {
   local -r file="$1"
   if [[ -d "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -665,7 +665,7 @@ assert_dir_not_exist() {
 }
 
 # Fail and display path of the block special file if it exists. This
-# function is the logical complement of `assert_block_exist'.
+# function is the logical complement of `assert_block_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -677,7 +677,7 @@ assert_dir_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_block_not_exist() {
+assert_block_not_exists() {
   local -r file="$1"
   if [[ -b "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -689,7 +689,7 @@ assert_block_not_exist() {
 }
 
 # Fail and display path of the character special file if it exists. This
-# function is the logical complement of `assert_character_exist'.
+# function is the logical complement of `assert_character_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -701,7 +701,7 @@ assert_block_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_character_not_exist() {
+assert_character_not_exists() {
   local -r file="$1"
   if [[ -c "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -713,7 +713,7 @@ assert_character_not_exist() {
 }
 
 # Fail and display path of the symbolic link if it exists. This
-# function is the logical complement of `assert_link_exist'.
+# function is the logical complement of `assert_link_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -725,7 +725,7 @@ assert_character_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_link_not_exist() {
+assert_link_not_exists() {
   local -r file="$1"
   if [[ -L "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -737,7 +737,7 @@ assert_link_not_exist() {
 }
 
 # Fail and display path of the socket if it exists. This
-# function is the logical complement of `assert_socket_exist'.
+# function is the logical complement of `assert_socket_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -749,7 +749,7 @@ assert_link_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_socket_not_exist() {
+assert_socket_not_exists() {
   local -r file="$1"
   if [[ -S "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -761,7 +761,7 @@ assert_socket_not_exist() {
 }
 
 # Fail and display path of the named pipe if it exists. This
-# function is the logical complement of `assert_fifo_exist'.
+# function is the logical complement of `assert_fifo_exists'.
 #
 # Globals:
 #   BATSLIB_FILE_PATH_REM
@@ -773,7 +773,7 @@ assert_socket_not_exist() {
 #   1 - otherwise
 # Outputs:
 #   STDERR - details, on failure
-assert_fifo_not_exist() {
+assert_fifo_not_exists() {
   local -r file="$1"
   if [[ -p "$file" ]]; then
     local -r rem="$BATSLIB_FILE_PATH_REM"
@@ -1098,3 +1098,19 @@ assert_file_not_empty() {
       | fail
   fi
 }
+
+# Aliases to old assertion names
+assert_exist() { assert_exists "$@"; }
+assert_not_exist() { assert_not_exist "$@"; }
+assert_file_exist() { assert_file_exist "$@"; }
+assert_file_not_exist() { assert_file_not_exist "$@"; }
+assert_dir_exist() { assert_dir_exist "$@"; }
+assert_dir_not_exist() { assert_dir_not_exist "$@"; }
+assert_link_exist() { assert_link_exist "$@"; }
+assert_link_not_exist() { assert_link_not_exist "$@"; }
+assert_block_exist() { assert_block_exist "$@"; }
+assert_block_not_exist() { assert_block_not_exist "$@"; }
+assert_character_exist() { assert_character_exist "$@"; }
+assert_character_not_exist() { assert_character_not_exist "$@"; }
+assert_fifo_exist() { assert_fifo_exist "$@"; }
+assert_fifo_not_exist() { assert_fifo_not_exist "$@"; }
