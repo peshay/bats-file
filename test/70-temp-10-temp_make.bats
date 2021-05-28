@@ -43,10 +43,12 @@ fixtures 'temp'
   run bats "${TEST_FIXTURE_ROOT}/temp_make-main.bats"
 
   [ "$status" -eq 1 ]
-  [ "${#lines[@]}" -eq 3 ]
-  [ "${lines[0]}" == '-- ERROR: temp_make --' ]
-  [ "${lines[1]}" == "Must be called from \`setup', \`@test' or \`teardown'" ]
-  [ "${lines[2]}" == '--' ]
+  [ "${#lines[@]}" -eq 9 ]
+  [ "${lines[0]}" == '1..1' ]
+  [ "${lines[1]}" == '-- ERROR: temp_make --' ]
+  [ "${lines[2]}" == "Must be called from \`setup', \`@test' or \`teardown'" ]
+  [ "${lines[3]}" == '--' ]
+  [ "${lines[4]}" == 'not ok 1 setup_file failed' ]
 }
 
 # Options
